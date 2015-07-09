@@ -1,0 +1,34 @@
+<%= javascript_include_tag 'invites.js', :plugin => 'redmine_invites' %>
+
+<% @invite_helper = InviteSettingsHelper::InviteTrackers.new %>
+<%- custom_fields_issues = CustomField.where(type: 'IssueCustomField') %>
+<p>
+  <%= label_tag('settings[custom_field_id_start]', l(:label_setting_custom_field_id_start)) %>
+  <%= select_tag('settings[custom_field_id_start]', options_for_select([['', 0]] + custom_fields_issues.collect{|c| [c.name, c.id]}, (@settings['custom_field_id_start'] || 0))) %>
+</p>
+
+<p>
+  <%= label_tag('settings[custom_field_id_end]', l(:label_setting_custom_field_id_end)) %>
+  <%= select_tag('settings[custom_field_id_end]', options_for_select([['', 0]] + custom_fields_issues.collect{|c| [c.name, c.id]}, (@settings['custom_field_id_end'] || 0))) %>
+</p>
+
+<p>
+  <fieldset class="collapsible collapsed" id="field_trackers_type" style="width: 300px; margin-left: 85px;"  >
+    <legend onclick="toggleFieldset(this);">Tipos de tarefas</legend>
+
+    <div style="display: none;" class="attachments">
+      <%= hidden_field_tag 'settings[tracker_types][]', 0 %>
+      <% Tracker.all.each do |tracker|%>
+          <%= check_box_tag 'settings[tracker_types][]',
+                            tracker.id,
+                            @invite_helper.tracker_type_nil("#{tracker.id}"),
+                            :id => tracker.id
+          %>
+          <%= (tracker.name) -%>
+          <br/>
+      <% end %>
+
+    </div>
+  </fieldset>
+</p>
+

@@ -1,0 +1,5 @@
+#encoding :UTF-8
+pt-br:
+  label_setting_tracker_id: "Tarefa"
+  label_setting_custom_field_id_start: "Campo personalizado 'Iníciar'"
+  label_setting_custom_field_id_end: "Campo personalizado 'Fim'"
